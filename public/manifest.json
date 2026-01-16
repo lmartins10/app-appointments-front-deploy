@@ -1,0 +1,34 @@
+{
+  "id": "protheus-sales-portal-nta-pwa",
+  "name": "Aplicação de agendamentos",
+  "short_name": "Aplicação de agendamentos",
+  "icons": [
+    {
+      "src": "/icons/57x57.png",
+      "sizes": "57x57",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "description": "Aplicação de agendamentos"
+  ,
+  
+  "screenshots": [
+    {
+      "src": "/icons/57x57.png",
+      "sizes": "57x57",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/icons/57x57.png",
+      "sizes": "57x57",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}
