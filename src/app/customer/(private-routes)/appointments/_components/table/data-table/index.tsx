@@ -19,7 +19,7 @@ import {
   TableRow,
   TableWrapper,
 } from '@/components/ui/table'
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { useQueryString } from '@/hooks/use-query-string'
 import { cn } from '@/lib/utils'
 import { getCommonPinningStyles } from '@/lib/utils/data-table'
@@ -93,7 +93,7 @@ export function DataTable<TData>({
   const searchParams = useSearchParams()
   const { createQueryString } = useQueryString(searchParams as URLSearchParams)
 
-  const isMobile = useIsMobile()
+  const isMobile = useMediaQuery('(max-width: 639px)')
 
   async function handleAppointmentStatusChange({ appointmentId, status }: { appointmentId: string, status: AppointmentsStatusType }) {
     const toasterId = 'appointment-status-change'

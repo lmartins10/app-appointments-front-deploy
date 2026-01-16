@@ -1,6 +1,12 @@
 'use client'
 
 import { createAppointment } from '@/api/actions/app/appointments/create-appointment'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Form } from '@/components/ui/form'
@@ -190,59 +196,115 @@ export function AppointmentsTabs() {
         onSubmit={form.handleSubmit(handleSubmitWithTransition)}
         className="flex flex-col gap-4"
       >
-        <Tabs defaultValue="customerData" value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="my-4 w-full items-center justify-start bg-background p-0">
-            <TabsTrigger
-              value="customerData"
-              className={
-                cn('relative h-14 border-b-2 border-transparent px-6 data-[state=active]:border-primary')
-              }
+        <div className="w-full">
+          {/* Mobile: Accordion (visible on <lg) */}
+          <div className="block lg:hidden">
+            <Accordion
+              type="single"
+              collapsible
+              value={activeTab}
+              onValueChange={(value) => handleTabChange(value || '')}
+              className="w-full"
             >
-              <div className={cn('flex items-center gap-2')}>
-                <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                  {isStep1Complete ? (
-                    <Check className="size-4" />
-                  ) : (
-                    <User className="size-4" />
-                  )}
-                </span>
-                <span> Dados do cliente</span>
-              </div>
-            </TabsTrigger>
+              <AccordionItem value="customerData">
+                <AccordionTrigger className="px-0">
+                  <div className={cn('flex items-center gap-2')}>
+                    <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                      {isStep1Complete ? (
+                        <Check className="size-4" />
+                      ) : (
+                        <User className="size-4" />
+                      )}
+                    </span>
+                    <span> Dados do cliente</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <Card>
+                    <CardContent className="py-4">
+                      <AppointmentCustomerForm form={form} />
+                    </CardContent>
+                  </Card>
+                </AccordionContent>
+              </AccordionItem>
 
-            <TabsTrigger
-              value="appointmentData"
-              className={
-                cn(
-                  'relative h-14 rounded-none border-b-2 border-transparent px-6 data-[state=active]:border-primary ',
-                )
-              }
-            >
-              <div className={cn('flex items-center gap-2')}>
-                <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-                  <CalendarDays className="size-4" />
-                </span>
-                <span> Dados do agendamento </span>
-              </div>
-            </TabsTrigger>
-          </TabsList>
+              <AccordionItem value="appointmentData">
+                <AccordionTrigger className="px-0">
+                  <div className={cn('flex items-center gap-2')}>
+                    <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                      <CalendarDays className="size-4" />
+                    </span>
+                    <span> Dados do agendamento </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <Card>
+                    <CardContent className="py-4">
+                      <AppointmentWithRoomForm form={form} />
+                    </CardContent>
+                  </Card>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
 
-          <TabsContent value="customerData" className="mt-0">
-            <Card>
-              <CardContent className="py-4">
-                <AppointmentCustomerForm form={form} />
-              </CardContent>
-            </Card>
-          </TabsContent>
+          {/* Desktop: Tabs (visible on lg+) */}
+          <div className="hidden lg:block">
+            <Tabs defaultValue="customerData" value={activeTab} onValueChange={handleTabChange} className="w-full">
+              <TabsList className="my-4 w-full items-center justify-start bg-background p-0">
+                <TabsTrigger
+                  value="customerData"
+                  className={
+                    cn('relative h-14 border-b-2 border-transparent px-6 data-[state=active]:border-primary')
+                  }
+                >
+                  <div className={cn('flex items-center gap-2')}>
+                    <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                      {isStep1Complete ? (
+                        <Check className="size-4" />
+                      ) : (
+                        <User className="size-4" />
+                      )}
+                    </span>
+                    <span> Dados do cliente</span>
+                  </div>
+                </TabsTrigger>
 
-          <TabsContent value="appointmentData" className="mt-0">
-            <Card>
-              <CardContent className="py-4">
-                <AppointmentWithRoomForm form={form} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                <TabsTrigger
+                  value="appointmentData"
+                  className={
+                    cn(
+                      'relative h-14 rounded-none border-b-2 border-transparent px-6 data-[state=active]:border-primary ',
+                    )
+                  }
+                >
+                  <div className={cn('flex items-center gap-2')}>
+                    <span className="flex size-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+                      <CalendarDays className="size-4" />
+                    </span>
+                    <span> Dados do agendamento </span>
+                  </div>
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="customerData" className="mt-0">
+                <Card>
+                  <CardContent className="py-4">
+                    <AppointmentCustomerForm form={form} />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              <TabsContent value="appointmentData" className="mt-0">
+                <Card>
+                  <CardContent className="py-4">
+                    <AppointmentWithRoomForm form={form} />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </div>
 
         {
           activeTab === 'appointmentData' && (

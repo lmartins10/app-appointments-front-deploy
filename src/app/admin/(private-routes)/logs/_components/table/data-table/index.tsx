@@ -8,7 +8,7 @@ import {
   TableRow,
   TableWrapper,
 } from '@/components/ui/table'
-import { useIsMobile } from '@/hooks/use-mobile'
+import { useMediaQuery } from '@/hooks/use-media-query'
 import { cn } from '@/lib/utils'
 import { getCommonPinningStyles } from '@/lib/utils/data-table'
 import { flexRender, Row, type Table as TanstackTable } from '@tanstack/react-table'
@@ -27,7 +27,7 @@ export function DataTable<TData>({
   className,
   ...props
 }: DataTableProps<TData>) {
-  const isMobile = useIsMobile()
+  const isMobile = useMediaQuery('(max-width: 639px)')
 
   const tableWrapperRef = React.useRef<HTMLDivElement>(null)
   const pageIndex = table.getState()?.pagination?.pageIndex ?? -1
